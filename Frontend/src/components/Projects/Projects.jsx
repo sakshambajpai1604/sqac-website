@@ -8,21 +8,13 @@ const Projects = () => {
 
   useEffect(() => {
     document.body.classList.remove('projects-page')
-    const originalStyle = document.body.style.background
-    document.body.style.background = '#121212'
-    return () => {
-      document.body.style.background = originalStyle
-    }
   }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.3, delayChildren: 0.2 },
     },
   };
 
@@ -31,27 +23,37 @@ const Projects = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 12,
-        mass: 0.5,
-      },
+      transition: { type: 'spring', stiffness: 100, damping: 12, mass: 0.5 },
     },
   };
 
   return (
-    <>
-      <Navbar/>
+    /* 1. NEW BACKGROUND: Stronger "Top Spotlight" effect */
+    <div style={{ 
+      /* Gradient starts Dark Grey at top (#2a2a2a) and fades to Pitch Black (#000000) */
+      background: 'radial-gradient(circle at 50% 10%, #2a2a2a 0%, #000000 80%)', 
+      minHeight: '100vh', 
+      width: '100vw',
+      position: 'fixed',
+      top: 0, 
+      left: 0, 
+      zIndex: 50,
+      overflowY: 'auto'
+    }}>
+      
+      <div style={{ position: 'relative', zIndex: 100 }}>
+        <Navbar/>
+      </div>
+
       <section 
-        className="min-h-[95vh] px-4 sm:px-6 py-10 sm:py-14 projects-section"
-        style={{ backgroundColor: '#121212', color: '#ffffff' }}
+        className="px-4 sm:px-6 py-10 sm:py-14"
+        style={{ color: '#ffffff', position: 'relative', zIndex: 60 }}
       >
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="min-h-screen flex items-center justify-center text-center"
+          className="min-h-[80vh] flex items-center justify-center text-center"
         >
           <div className="max-w-3xl w-full px-6">
             <motion.h1
@@ -63,7 +65,7 @@ const Projects = () => {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 color: '#FF8C00',
-                textShadow: '0 0 40px rgba(255, 69, 0, 0.3)'
+                filter: 'drop-shadow(0 0 30px rgba(255, 69, 0, 0.6))' /* Stronger Glow */
               }}
             >
               COMING SOON
@@ -71,8 +73,8 @@ const Projects = () => {
 
             <motion.p
               variants={itemVariants}
-              className="mt-4 text-2xl md:text-3xl projects-description font-medium max-w-2xl leading-snug mx-auto"
-              style={{ color: '#e0e0e0' }}
+              className="mt-4 text-2xl md:text-3xl font-medium max-w-2xl leading-snug mx-auto"
+              style={{ color: '#ffffff' }} /* Pure White for max contrast */
             >
               We're building something{' '}
               <span style={{ color: '#FF8C00', fontWeight: 'bold' }}>truly special</span>
@@ -80,8 +82,8 @@ const Projects = () => {
 
             <motion.p
               variants={itemVariants}
-              className="mt-6 text-lg md:text-xl projects-subtitle max-w-2xl leading-relaxed mx-auto"
-              style={{ color: '#b0b0b0' }}
+              className="mt-6 text-lg md:text-xl max-w-2xl leading-relaxed mx-auto"
+              style={{ color: '#d1d1d1' }} /* Light Grey */
             >
               Our team is working tirelessly to deliver an experience that exceeds all expectations.
             </motion.p>
@@ -92,36 +94,37 @@ const Projects = () => {
             >
               <motion.button
                 onClick={() => navigate('/JoinUs')}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '0 5px 15px rgba(255, 69, 0, 0.4)',
-                }}
+                whileHover={{ scale: 1.05, boxShadow: '0 5px 20px rgba(255, 69, 0, 0.6)' }}
                 whileTap={{ scale: 0.98 }}
                 className="px-10 py-3 text-white rounded-full font-semibold shadow-lg transition-all duration-300"
                 style={{
                   background: 'linear-gradient(135deg, #FF8C00 0%, #FF4500 100%)',
-                  boxShadow: '0 5px 15px rgba(255, 69, 0, 0.3)'
+                  boxShadow: '0 5px 15px rgba(255, 69, 0, 0.3)',
+                  border: 'none'
                 }}
               >
                 Join Us
               </motion.button>
             </motion.div>
 
+            {/* 2. FIXED FOOTER TEXT: White, Wide Spacing, and !important to force visibility */}
             <motion.div
               variants={itemVariants}
-              className="mt-12 text-sm tracking-wider"
+              className="mt-16 text-sm tracking-[0.2em]" /* WIDE spacing for cinematic look */
               style={{
-                color: '#FF8C00',
-                textShadow: '0 0 20px rgba(255, 69, 0, 0.4)',
-                opacity: 0.8
+                color: '#ffffff', 
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                opacity: 0.8,
+                fontWeight: '600',
+                textTransform: 'uppercase'
               }}
             >
-              SOMETHING BIG IS BREWING.. BE THE FIRST TO KNOW          
+              Something big is brewing... be the first to know          
             </motion.div>
           </div>
         </motion.div>
       </section>
-    </>
+    </div>
   )
 }
 
