@@ -1,4 +1,4 @@
- import React , {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../HomePage/Navbar'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
@@ -7,7 +7,7 @@ const Projects = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Add class to body to override purple theme
+    // Add class to body to override any global themes
     document.body.classList.add('projects-page')
     
     // Cleanup when component unmounts
@@ -44,7 +44,11 @@ const Projects = () => {
   return (
     <>
       <Navbar/>
-      <section className="min-h-[95vh] px-4 sm:px-6 py-10 sm:py-14 projects-section">
+      {/* 1. CHANGED: Added inline style for Dark Background (#121212) */}
+      <section 
+        className="min-h-[95vh] px-4 sm:px-6 py-10 sm:py-14 projects-section"
+        style={{ backgroundColor: '#121212', color: '#ffffff' }} 
+      >
         <motion.div
           initial="hidden"
           animate="visible"
@@ -57,8 +61,13 @@ const Projects = () => {
               className="text-6xl md:text-8xl font-bold mb-8 leading-tight"
               style={{
                 fontFamily: 'var(--font-head)',
-                color: '#ff6b35',
-                textShadow: '0 0 40px rgba(255, 107, 53, 0.8)'
+                // 2. CHANGED: Gradient Text (Orange to Red-Orange)
+                background: 'linear-gradient(90deg, #FF8C00, #FF4500)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                // Fallback color if gradient fails
+                color: '#FF8C00', 
+                textShadow: '0 0 40px rgba(255, 69, 0, 0.3)'
               }}
             >
               COMING SOON
@@ -67,14 +76,17 @@ const Projects = () => {
             <motion.p
               variants={itemVariants}
               className="mt-4 text-2xl md:text-3xl projects-description font-medium max-w-2xl leading-snug mx-auto"
+              style={{ color: '#e0e0e0' }} // Light grey text
             >
               We're building something{' '}
-              <span className="text-pink-500 font-semibold">truly special</span>
+              {/* 3. CHANGED: Orange highlight */}
+              <span style={{ color: '#FF8C00', fontWeight: 'bold' }}>truly special</span>
             </motion.p>
 
             <motion.p
               variants={itemVariants}
               className="mt-6 text-lg md:text-xl projects-subtitle max-w-2xl leading-relaxed mx-auto"
+              style={{ color: '#b0b0b0' }} // Dimmer grey for subtitle
             >
               Our team is working tirelessly to deliver an experience that exceeds all expectations.
             </motion.p>
@@ -87,14 +99,15 @@ const Projects = () => {
                 onClick={() => navigate('/JoinUs')}
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: '0 5px 15px rgba(192, 38, 211, 0.3)',
+                  boxShadow: '0 5px 15px rgba(255, 69, 0, 0.4)', // Orange glow on hover
                 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-10 py-3 text-white rounded-full font-semibold shadow-lg transition-all duration-300"
-              style={{
-                background: 'linear-gradient(90deg, #ff6b35, #ec4899)',
-                boxShadow: '0 5px 15px rgba(255, 107, 53, 0.3)'
-              }}
+                style={{
+                  // 4. CHANGED: Orange Gradient Button
+                  background: 'linear-gradient(135deg, #FF8C00 0%, #FF4500 100%)',
+                  boxShadow: '0 5px 15px rgba(255, 69, 0, 0.3)'
+                }}
               >
                 Join Us
               </motion.button>
@@ -104,8 +117,9 @@ const Projects = () => {
               variants={itemVariants}
               className="mt-12 text-sm tracking-wider"
               style={{
-                color: '#ff6b35',
-                textShadow: '0 0 20px rgba(255, 107, 53, 0.6)'
+                color: '#FF8C00', // Orange footer text
+                textShadow: '0 0 20px rgba(255, 69, 0, 0.4)',
+                opacity: 0.8
               }}
             >
               SOMETHING BIG IS BREWING.. BE THE FIRST TO KNOW          
